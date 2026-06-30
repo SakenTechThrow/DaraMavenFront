@@ -1,0 +1,39 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>DaraMaven</h1>
+    <p class="subtitle">Login to your account</p>
+
+    <form (ngSubmit)="onSubmit()">
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="Enter email"
+        required
+      />
+
+      <label>Password</label>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Enter password"
+        required
+      />
+
+      @if (errorMessage) {
+        <p class="error">{{ errorMessage }}</p>
+      }
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Loading...' : 'Login' }}
+      </button>
+    </form>
+
+    <p class="link-text">
+      Don't have an account?
+      <a routerLink="/register">Register</a>
+    </p>
+  </div>
+</div>
