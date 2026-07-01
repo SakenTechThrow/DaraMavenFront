@@ -6,6 +6,7 @@ import { Profile } from './pages/profile/profile';
 import { authGuard } from './core/guards/auth-guard';
 import { Sessions } from './pages/sessions/sessions';
 import { AdminUsers } from './pages/admin-users/admin-users';
+import { AdminAuditLogs } from './pages/admin-audit-logs/admin-audit-logs';
 
 export const routes: Routes = [
     {
@@ -39,6 +40,11 @@ export const routes: Routes = [
     {
         path: 'admin/users',
         component: AdminUsers,
+        canActivate: [authGuard]
+    },
+    {
+        path:  'admin/audit-logs',
+        component: AdminAuditLogs,
         canActivate: [authGuard]
     }
 ];

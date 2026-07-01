@@ -1,1 +1,137 @@
-<p>admin-users works!</p>
+<div class="admin-page">
+  <div class="admin-card">
+    <h1>Admin Users</h1>
+
+    @if (loading) {
+      <p>Loading users...</p>
+    }
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+
+    @if (successMessage) {
+      <p class="success">{{ successMessage }}</p>
+    }
+
+    @if (!loading) {
+      <p class="summary">
+        Total users: {{ totalElements }}
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Active</th>
+              <th>Deleted</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (user of users; track user.id) {
+              <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <span class="badge">{{ user.role }}</span>
+                </td>
+                <td>
+                  <span [class.good]="user.active" [class.bad]="!user.active">
+                    {{ user.active ? 'Yes' : 'No' }}
+                  </span>
+                </td>
+                <td>
+                  <span [class.bad]="user.deleted" [class.good]="!user.deleted">
+                    {{ user.deleted ? 'Yes' : 'No' }}
+                  </span>
+                </td>
+                <td>{{ user.createdAt }}</td>
+                <td>
+                  <div class="actions">
+                    @if (user.role !== 'ADMIN') {
+                      <button
+                        class="small-btn blue"
+                        (click)="makeAdmin(user)"
+                        [disabled]="actionLoadingId === user.id"
+                      >
+                        Make Admin
+                      </button>
+                    }
+
+                    @if (user.role !== 'USER') {
+                      <button
+                        class="small-btn gray"
+                        (click)="makeUser(user)"
+                        [disabled]="actionLoadingId === user.id"
+                      >
+                        Make User
+                      </button>
+                    }
+
+                    @if (user.active) {
+                      <button
+                        class="small-btn orange"
+                        (click)="blockUser(user)"
+                        [disabled]="actionLoadingId === user.id"
+                      >
+                        Block
+                      </button>
+                    } @else {
+                      <button
+                        class="small-btn green"
+                        (click)="unblockUser(user)"
+                        [disabled]="actionLoadingId === user.id"
+                      >
+                        Unblock
+                      </button>
+                    }
+
+                    @if (!user.deleted) {
+                      <button
+                        class="small-btn red"
+                        (click)="deleteUser(user)"
+                        [disabled]="actionLoadingId === user.id"
+                      >
+                        Delete
+                      </button>
+                    } @else {
+                      <button
+                        class="small-btn green"
+                        (click)="restoreUser(user)"
+                        [disabled]="actionLoadingId === user.id"
+                      >
+                        Restore
+                      </button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="page === 0">
+          Previous
+        </button>
+
+        <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+
+        <button (click)="nextPage()" [disabled]="page + 1 >= totalPages">
+          Next
+        </button>
+      </div>
+
+      <button class="back-btn" (click)="goBack()">
+        Back to Dashboard
+      </button>
+    }
+  </div>
+</div>

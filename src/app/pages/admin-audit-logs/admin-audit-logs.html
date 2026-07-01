@@ -1,0 +1,99 @@
+<div class="audit-page">
+  <div class="audit-card">
+    <h1>Audit Logs</h1>
+
+    <div class="filters">
+      <div class="form-group">
+        <label>Action</label>
+        <input
+          type="text"
+          name="action"
+          [(ngModel)]="action"
+          placeholder="Example: USER_BLOCKED"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Actor email</label>
+        <input
+          type="text"
+          name="actorEmail"
+          [(ngModel)]="actorEmail"
+          placeholder="admin@mail.com"
+        />
+      </div>
+
+      <button class="filter-btn" (click)="applyFilters()">
+        Apply Filters
+      </button>
+
+      <button class="clear-btn" (click)="clearFilters()">
+        Clear Filters
+      </button>
+    </div>
+
+    @if (loading) {
+      <p>Loading audit logs...</p>
+    }
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+
+    @if (!loading) {
+      <p class="summary">
+        Total logs: {{ totalElements }}
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Actor</th>
+              <th>Action</th>
+              <th>Target Type</th>
+              <th>Target ID</th>
+              <th>IP</th>
+              <th>Description</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (log of logs; track log.id) {
+              <tr>
+                <td>{{ log.id }}</td>
+                <td>{{ log.actorEmail || 'System' }}</td>
+                <td>
+                  <span class="badge">{{ log.action }}</span>
+                </td>
+                <td>{{ log.targetType }}</td>
+                <td>{{ log.targetId || '-' }}</td>
+                <td>{{ log.ipAddress || '-' }}</td>
+                <td>{{ log.description || '-' }}</td>
+                <td>{{ log.createdAt }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="page === 0">
+          Previous
+        </button>
+
+        <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+
+        <button (click)="nextPage()" [disabled]="page + 1 >= totalPages">
+          Next
+        </button>
+      </div>
+
+      <button class="back-btn" (click)="goBack()">
+        Back to Dashboard
+      </button>
+    }
+  </div>
+</div>

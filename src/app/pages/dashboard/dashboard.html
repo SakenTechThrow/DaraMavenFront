@@ -18,9 +18,28 @@
         <p><strong>Active:</strong> {{ user.active }}</p>
         <p><strong>Created at:</strong> {{ user.createdAt }}</p>
       </div>
-      <button class="profile-btn" routerLink="/profile">My Profile</button>
-      <button class="sessions-btn" routerLink="/sessions">My Sessions</button>
-      <button (click)="logout()">Logout</button>
+
+      <button class="profile-btn" routerLink="/profile">
+        My Profile
+      </button>
+
+      <button class="sessions-btn" routerLink="/sessions">
+        My Sessions
+      </button>
+
+      @if (user.role === 'ADMIN') {
+        <button class="admin-btn" routerLink="/admin/users">
+          Admin Users
+        </button>
+
+        <button class="audit-btn" routerLink="/admin/audit-logs">
+          Audit Logs
+        </button>
+      }
+
+      <button class="logout-btn" (click)="logout()">
+        Logout
+      </button>
     }
   </div>
 </div>

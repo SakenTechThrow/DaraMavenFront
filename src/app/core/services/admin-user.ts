@@ -38,7 +38,7 @@ export class AdminUserService {
     return this.http.patch<AdminUser>(`${this.apiUrl}/${id}/block`, request);
   }
   unblockUser(id: number): Observable<AdminUser>{
-    return this.http.patch<AdminUser>(`${this.apiUrl}/${id}/restore`,{});
+    return this.http.patch<AdminUser>(`${this.apiUrl}/${id}/unblock`,{});
   }
 
   restoreUser(id: number): Observable<AdminUser>{
