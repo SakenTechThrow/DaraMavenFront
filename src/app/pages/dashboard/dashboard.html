@@ -16,7 +16,7 @@
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Role:</strong> {{ user.role }}</p>
         <p><strong>Active:</strong> {{ user.active }}</p>
-        <p><strong>Created at:</strong> {{ user.createdAt }}</p>
+        <p><strong>Created at:</strong> {{ user.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
       </div>
 
       <button class="profile-btn" routerLink="/profile">

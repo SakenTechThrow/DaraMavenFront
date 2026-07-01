@@ -13,6 +13,13 @@
         <p class="status new">You do not have a profile yet. Create it now.</p>
       }
 
+      @if (profile) {
+  <div class="profile-meta">
+    <p><strong>Created:</strong> {{ profile.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
+    <p><strong>Updated:</strong> {{ profile.updatedAt | date:'dd MMM yyyy, HH:mm' }}</p>
+  </div>
+}
+
       @if (errorMessage) {
         <p class="error">{{ errorMessage }}</p>
       }
@@ -21,7 +28,7 @@
         <p class="success">{{ successMessage }}</p>
       }
 
-      <form (ngSubmit)="savedProfile()">
+      <form (ngSubmit)="saveProfile()">
         <div class="form-row">
           <div class="form-group">
             <label>First name</label>

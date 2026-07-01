@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../core/services/auth';
+import { getErrorMessage } from '../../core/utils/error-message';
 
 @Component({
   selector: 'app-register',
@@ -46,9 +47,9 @@ export class Register {
           this.router.navigate(['/login']);
         }, 1000);
       },
-      error: () => {
+      error: (error) => {
         this.loading = false;
-        this.errorMessage = 'Registration failed.';
+        this.errorMessage = getErrorMessage(error, 'Registration failed.');
       }
     });
   }

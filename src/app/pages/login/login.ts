@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../core/services/auth';
+import { getErrorMessage } from '../../core/utils/error-message';
 
 @Component({
   selector: 'app-login',
@@ -33,9 +34,9 @@ export class Login {
         this.loading = false;
         this.router.navigate(['/dashboard']);
       },
-      error:()=>{
+      error:(error)=>{
         this.loading = false;
-        this.errorMessage = 'Email or password is wrong'
+        this.errorMessage = getErrorMessage(error, 'Email or password is wrong');
       }
     });
   }

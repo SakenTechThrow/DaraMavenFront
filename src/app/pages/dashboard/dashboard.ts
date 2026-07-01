@@ -3,11 +3,13 @@ import { UserService } from '../../core/services/user';
 import { User } from '../../models/user';
 import { Auth } from '../../core/services/auth';
 import { Router, RouterLink} from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { getErrorMessage } from '../../core/utils/error-message';
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -32,9 +34,9 @@ export class Dashboard implements OnInit {
         this.user = response;
         this.loading = false;
       },
-      error: () => {
+      error: (error) => {
         this.loading = false;
-        this.errorMessage = 'Could not load user data.';
+        this.errorMessage = getErrorMessage(error, 'Could not load user data.');
       }
     });
   }

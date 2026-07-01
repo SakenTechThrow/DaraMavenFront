@@ -3,10 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuditLog } from '../../models/audit-log';
 import { AuditLogService } from '../../core/services/audit-log';
+import { DatePipe } from '@angular/common';
+import { getErrorMessage } from '../../core/utils/error-message';
 
 @Component({
   selector: 'app-admin-audit-logs',
-  imports: [FormsModule],
+  imports: [FormsModule, DatePipe],
   templateUrl: './admin-audit-logs.html',
   styleUrl: './admin-audit-logs.scss',
 })
@@ -46,9 +48,9 @@ export class AdminAuditLogs implements OnInit{
         this.totalElements = response.totalElements;
         this.loading = false;
       },
-      error: () => {
+      error: (error) => {
         this.loading = false;
-        this.errorMessage = 'Could not load audit logs. Maybe you are not ADMIN.';
+        this.errorMessage = getErrorMessage(error, 'Could not load audit logs. Maybe you are not ADMIN.');
       } 
     });
   }

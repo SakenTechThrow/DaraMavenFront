@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProfileService } from '../../core/services/profile';
 import { Profile as UserProfile } from '../../models/profile';
+import { getErrorMessage } from '../../core/utils/error-message';
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, DatePipe],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
-export class Profile implements OnInit{
+export class Profile implements OnInit {
   profile: UserProfile | null = null;
 
   firstName = '';
@@ -61,7 +63,7 @@ export class Profile implements OnInit{
     });
   }
 
-  savedProfile(): void{
+  saveProfile(): void{
       this.errorMessage = '';
       this.successMessage = '';
       this.saving = true;
@@ -81,9 +83,9 @@ export class Profile implements OnInit{
             this.saving = false;
             this.successMessage = 'Profile updated successfully';
           },
-          error:() =>{
+          error:(error) =>{
             this.saving = false;
-            this.errorMessage = 'Could not update profile';
+            this.errorMessage = getErrorMessage(error, 'Could not update profile');
           }
         });
       } else{
@@ -93,9 +95,9 @@ export class Profile implements OnInit{
             this.saving = false;
             this.successMessage = 'Profile created successfully';
           },
-          error:()=>{
+          error:(error)=>{
             this.saving = false;
-            this.errorMessage = 'Could not create profile';
+            this.errorMessage = getErrorMessage(error, 'Could not create profile');
           }
         });
       }
@@ -124,9 +126,9 @@ export class Profile implements OnInit{
         this.deleting = false;
         this.successMessage = 'Profile deleted successfully';
       },
-      error:()=>{
+      error:(error)=>{
         this.deleting = false;
-        this.errorMessage = 'Could not delete profile'
+        this.errorMessage = getErrorMessage(error, 'Could not delete profile');
       }
     });
   }

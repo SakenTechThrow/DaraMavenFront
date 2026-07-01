@@ -72,7 +72,7 @@
                 <td>{{ log.targetId || '-' }}</td>
                 <td>{{ log.ipAddress || '-' }}</td>
                 <td>{{ log.description || '-' }}</td>
-                <td>{{ log.createdAt }}</td>
+                <td>{{ log.createdAt | date:'dd MMM yyyy, HH:mm' }}</td>
               </tr>
             }
           </tbody>

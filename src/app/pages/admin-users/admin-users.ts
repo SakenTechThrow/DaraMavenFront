@@ -2,10 +2,12 @@ import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminUser } from '../../models/admin-user';
 import { AdminUserService } from '../../core/services/admin-user';
+import { DatePipe } from '@angular/common';
+import { getErrorMessage } from '../../core/utils/error-message';
 
 @Component({
   selector: 'app-admin-users',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './admin-users.html',
   styleUrl: './admin-users.scss',
 })
@@ -44,9 +46,9 @@ export class AdminUsers implements OnInit{
         this.totalElements = response.totalElements;
         this.loading = false;
       },
-      error:() =>{
+      error:(error) =>{
         this.loading = false;
-        this.errorMessage = 'Could not load users. Maybe you are not ADMIN.';
+        this.errorMessage = getErrorMessage(error, 'Could not load users. Maybe you are not ADMIN.');
       }
     });
   }
@@ -59,9 +61,9 @@ export class AdminUsers implements OnInit{
         this.successMessage = 'User role changed to ADMIN';
         this.loadUsers();
       },
-      error: () =>{
+      error: (error) =>{
         this.actionLoadingId = null;
-        this.errorMessage = 'Could not change role';
+        this.errorMessage = getErrorMessage(error, 'Could not change role');
       }
     });
   }
@@ -74,9 +76,9 @@ export class AdminUsers implements OnInit{
         this.successMessage = 'User role changed to USER';
         this.loadUsers();
       },
-      error: () => {
+      error: (error) => {
         this.actionLoadingId = null;
-        this.errorMessage = 'Could not change role';
+        this.errorMessage = getErrorMessage(error, 'Could not change role');
       }
     });
   }
@@ -94,9 +96,9 @@ export class AdminUsers implements OnInit{
         this.successMessage = 'User blocked successfully';
         this.loadUsers();
       },
-      error: () =>{
+      error: (error) =>{
         this.actionLoadingId = null;
-        this.errorMessage = 'Could not block user';
+        this.errorMessage = getErrorMessage(error, 'Could not block user');
       }
     });
   }
@@ -109,9 +111,9 @@ export class AdminUsers implements OnInit{
         this.successMessage = 'User unblocked successfully';
         this.loadUsers();
       },
-      error: () => {
+      error: (error) => {
         this.actionLoadingId = null;
-        this.errorMessage = 'Could not unblock user';
+        this.errorMessage = getErrorMessage(error, 'Could not unblock user');
       }
     });
   }
@@ -129,9 +131,9 @@ export class AdminUsers implements OnInit{
       this.successMessage = 'User deleted successfully';
       this.loadUsers();
       },
-      error:() =>{
+      error:(error) =>{
         this.actionLoadingId = null;
-        this.errorMessage = 'Could not delete user';
+        this.errorMessage = getErrorMessage(error, 'Could not delete user');
       }
     });
   }
@@ -144,9 +146,9 @@ export class AdminUsers implements OnInit{
         this.successMessage = 'User restored successfully';
         this.loadUsers();
       },
-      error: () => {
+      error: (error) => {
         this.actionLoadingId = null;
-        this.errorMessage = 'Could not restore user';
+        this.errorMessage = getErrorMessage(error, 'Could not restore user');
       }
     });
   }

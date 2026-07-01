@@ -17,7 +17,7 @@ export class ProfileService {
     return this.http.post<Profile>(this.apiUrl, request);
   }
   updateMyProfile(request: UpdateProfileRequest): Observable<Profile>{
-    return this.http.post<Profile>(this.apiUrl, request);
+    return this.http.patch<Profile>(this.apiUrl, request);
   }
   deleteMyProfile(): Observable<any>{
     return this.http.delete(this.apiUrl);

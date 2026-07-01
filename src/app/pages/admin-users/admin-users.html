@@ -51,7 +51,7 @@
                     {{ user.deleted ? 'Yes' : 'No' }}
                   </span>
                 </td>
-                <td>{{ user.createdAt }}</td>
+                <td>{{ user.createdAt | date:'dd MMM yyyy, HH:mm' }}</td>
                 <td>
                   <div class="actions">
                     @if (user.role !== 'ADMIN') {

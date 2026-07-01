@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Session } from '../../models/session';
 import { SessionService } from '../../core/services/session';
+import { DatePipe } from '@angular/common';
+import { getErrorMessage } from '../../core/utils/error-message';
 
 @Component({
   selector: 'app-sessions',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './sessions.html',
   styleUrl: './sessions.scss',
 })
@@ -37,9 +39,9 @@ export class Sessions implements OnInit{
         this.sessions = response;
         this.loading = false;
       },
-      error:() =>{
+      error:(error) =>{
         this.loading = false;
-        this.errorMessage = 'Could not load sessions';
+        this.errorMessage = getErrorMessage(error, 'Could not load sessions');
       }
     });
   }
@@ -60,9 +62,9 @@ export class Sessions implements OnInit{
         this.deletingId = null;
         this.successMessage = 'Session deleted successfully';
       },
-      error: ()=>{
+      error: (error)=>{
         this.deletingId = null;
-        this.errorMessage = 'Could not delete session';
+        this.errorMessage = getErrorMessage(error, 'Could not delete session');
       }
     });
   }
