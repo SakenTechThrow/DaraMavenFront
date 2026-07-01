@@ -1,0 +1,55 @@
+<div class="sessions-page">
+  <div class="sessions-card">
+    <h1>My Sessions</h1>
+
+    @if (loading) {
+      <p>Loading sessions...</p>
+    }
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+
+    @if (successMessage) {
+      <p class="success">{{ successMessage }}</p>
+    }
+
+    @if (!loading) {
+      @if (sessions.length === 0) {
+        <p>No sessions found.</p>
+      } @else {
+        <div class="sessions-list">
+          @for (session of sessions; track session.id) {
+            <div class="session-item">
+              <div class="session-info">
+                <p><strong>ID:</strong> {{ session.id }}</p>
+                <p><strong>IP address:</strong> {{ session.ipAddress || 'Unknown' }}</p>
+                <p><strong>User agent:</strong> {{ session.userAgent || 'Unknown' }}</p>
+                <p><strong>Created at:</strong> {{ session.createdAt }}</p>
+                <p><strong>Expires at:</strong> {{ session.expiresAt }}</p>
+                <p>
+                  <strong>Revoked:</strong>
+                  <span [class.revoked]="session.revoked" [class.active]="!session.revoked">
+                    {{ session.revoked ? 'Yes' : 'No' }}
+                  </span>
+                </p>
+              </div>
+
+              <button
+                class="delete-btn"
+                (click)="deleteSession(session.id)"
+                [disabled]="deletingId === session.id"
+              >
+                {{ deletingId === session.id ? 'Deleting...' : 'Delete Session' }}
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      <button class="back-btn" (click)="goBack()">
+        Back to Dashboard
+      </button>
+    }
+  </div>
+</div>

@@ -1,1 +1,52 @@
-<p>register works!</p>
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Create Account</h1>
+    <p class="subtitle">Register for DaraMaven</p>
+
+    <form (ngSubmit)="onSubmit()">
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="Enter email"
+        required
+      />
+
+      <label>Password</label>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Enter password"
+        required
+      />
+
+      <label>Confirm Password</label>
+      <input
+        type="password"
+        name="confirmPassword"
+        [(ngModel)]="confirmPassword"
+        placeholder="Confirm password"
+        required
+      />
+
+      @if (errorMessage) {
+        <p class="error">{{ errorMessage }}</p>
+      }
+
+      @if (successMessage) {
+        <p class="success">{{ successMessage }}</p>
+      }
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Creating...' : 'Register' }}
+      </button>
+    </form>
+
+    <p class="link-text">
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </p>
+  </div>
+</div>

@@ -1,4 +1,26 @@
-<div class="dashboard">
-  <h1>Welcome to DaraMaven Dashboard</h1>
-  <p>You are logged in.</p>
+<div class="dashboard-page">
+  <div class="dashboard-card">
+    <h1>DaraMaven Dashboard</h1>
+
+    @if (loading) {
+      <p>Loading user data...</p>
+    }
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+
+    @if (user) {
+      <div class="user-info">
+        <p><strong>ID:</strong> {{ user.id }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Role:</strong> {{ user.role }}</p>
+        <p><strong>Active:</strong> {{ user.active }}</p>
+        <p><strong>Created at:</strong> {{ user.createdAt }}</p>
+      </div>
+      <button class="profile-btn" routerLink="/profile">My Profile</button>
+      <button class="sessions-btn" routerLink="/sessions">My Sessions</button>
+      <button (click)="logout()">Logout</button>
+    }
+  </div>
 </div>

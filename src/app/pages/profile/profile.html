@@ -1,0 +1,102 @@
+<div class="profile-page">
+  <div class="profile-card">
+    <h1>My Profile</h1>
+
+    @if (loading) {
+      <p>Loading profile...</p>
+    }
+
+    @if (!loading) {
+      @if (profile) {
+        <p class="status existing">Profile exists. You can edit it.</p>
+      } @else {
+        <p class="status new">You do not have a profile yet. Create it now.</p>
+      }
+
+      @if (errorMessage) {
+        <p class="error">{{ errorMessage }}</p>
+      }
+
+      @if (successMessage) {
+        <p class="success">{{ successMessage }}</p>
+      }
+
+      <form (ngSubmit)="savedProfile()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name</label>
+            <input
+              type="text"
+              name="firstName"
+              [(ngModel)]="firstName"
+              placeholder="Enter first name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Last name</label>
+            <input
+              type="text"
+              name="lastName"
+              [(ngModel)]="lastName"
+              placeholder="Enter last name"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Phone</label>
+          <input
+            type="text"
+            name="phone"
+            [(ngModel)]="phone"
+            placeholder="+77071234567"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+          <input
+            type="text"
+            name="city"
+            [(ngModel)]="city"
+            placeholder="Almaty"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Birth date</label>
+          <input
+            type="date"
+            name="birthDate"
+            [(ngModel)]="birthDate"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Bio</label>
+          <textarea
+            name="bio"
+            [(ngModel)]="bio"
+            placeholder="Tell something about yourself"
+            rows="4"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="save-btn" [disabled]="saving">
+          {{ saving ? 'Saving...' : 'Save Profile' }}
+        </button>
+      </form>
+
+      @if (profile) {
+        <button class="delete-btn" (click)="deleteProfile()" [disabled]="deleting">
+          {{ deleting ? 'Deleting...' : 'Delete Profile' }}
+        </button>
+      }
+
+      <button class="back-btn" (click)="goBack()">
+        Back to Dashboard
+      </button>
+    }
+  </div>
+</div>

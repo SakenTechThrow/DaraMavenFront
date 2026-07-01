@@ -1,9 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { UserService } from '../../core/services/user';
+import { User } from '../../models/user';
+import { Auth } from '../../core/services/auth';
+import { Router, RouterLink} from '@angular/router';
+
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard {}
+export class Dashboard implements OnInit {
+  user: User | null = null;
+  loading = true;
+  errorMessage = '';
+
+  constructor(
+    private userService: UserService,
+    private auth: Auth,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.loadMe();
+  }
+  
+  loadMe(): void {
+    this.userService.getMe().subscribe({
+      next: (response) => {
+        this.user = response;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        this.errorMessage = 'Could not load user data.';
+      }
+    });
+  }
+  logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
+}
