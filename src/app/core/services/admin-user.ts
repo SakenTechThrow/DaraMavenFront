@@ -8,6 +8,7 @@ import{
   ChangeStatusRequest,
   PageResponse
 } from '../../models/admin-user';
+import { Profile } from '../../models/profile';
 @Injectable({
   providedIn: 'root',
 })
@@ -47,5 +48,8 @@ export class AdminUserService {
 
   deleteUser(id: number): Observable<any>{
   return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+  getUserProfile(id: number): Observable<Profile> {
+    return this.http.get<Profile>(`${this.apiUrl}/${id}/profile`);
   }
 }

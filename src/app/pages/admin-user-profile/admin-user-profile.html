@@ -1,0 +1,43 @@
+<div class="profile-page">
+  <div class="profile-card">
+    <h1>User Profile</h1>
+
+    @if (loading) {
+      <p>Loading user profile...</p>
+    }
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+
+    @if (!loading && profile) {
+      <div class="profile-info">
+        <p><strong>Profile ID:</strong> {{ profile.id }}</p>
+        <p><strong>User ID:</strong> {{ profile.userId }}</p>
+        <p><strong>Email:</strong> {{ profile.email }}</p>
+        <p><strong>First name:</strong> {{ profile.firstName || '-' }}</p>
+        <p><strong>Last name:</strong> {{ profile.lastName || '-' }}</p>
+        <p><strong>Phone:</strong> {{ profile.phone || '-' }}</p>
+        <p><strong>City:</strong> {{ profile.city || '-' }}</p>
+        <p><strong>Birth date:</strong> {{ profile.birthDate || '-' }}</p>
+        <p><strong>Bio:</strong> {{ profile.bio || '-' }}</p>
+        <p>
+          <strong>Created at:</strong>
+          {{ profile.createdAt | date:'dd MMM yyyy, HH:mm' }}
+        </p>
+        <p>
+          <strong>Updated at:</strong>
+          {{ profile.updatedAt | date:'dd MMM yyyy, HH:mm' }}
+        </p>
+      </div>
+    }
+
+    @if (!loading && !profile && !errorMessage) {
+      <p>No profile found for this user.</p>
+    }
+
+    <button class="back-btn" (click)="goBack()">
+      Back to Admin Users
+    </button>
+  </div>
+</div>

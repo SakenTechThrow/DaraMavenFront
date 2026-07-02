@@ -54,6 +54,14 @@
                 <td>{{ user.createdAt | date:'dd MMM yyyy, HH:mm' }}</td>
                 <td>
                   <div class="actions">
+
+                    <button
+                    class="small-btn purple"
+                    (click) = "viewProfile(user)"
+                    >
+                    View Profile
+                  </button>
+
                     @if (user.role !== 'ADMIN') {
                       <button
                         class="small-btn blue"

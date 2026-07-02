@@ -164,6 +164,9 @@ export class AdminUsers implements OnInit{
       this.loadUsers();
     }
   }
+  viewProfile(user: AdminUser): void {
+    this.router.navigate(['/admin/users', user.id, 'profile']);
+  }
   goBack(): void {
     this.router.navigate(['/dashboard']);
   }

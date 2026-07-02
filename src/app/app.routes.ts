@@ -7,6 +7,7 @@ import { authGuard } from './core/guards/auth-guard';
 import { Sessions } from './pages/sessions/sessions';
 import { AdminUsers } from './pages/admin-users/admin-users';
 import { AdminAuditLogs } from './pages/admin-audit-logs/admin-audit-logs';
+import { AdminUserProfile } from './pages/admin-user-profile/admin-user-profile';
 
 export const routes: Routes = [
     {
@@ -45,6 +46,11 @@ export const routes: Routes = [
     {
         path:  'admin/audit-logs',
         component: AdminAuditLogs,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'admin/users/:id/profile',
+        component: AdminUserProfile,
         canActivate: [authGuard]
     }
 ];
