@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CreateProfileRequest, Profile, UpdateProfileRequest } from '../../models/profile';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
-  private apiUrl = 'http://localhost:8080/api/users/me/profile';
+  private apiUrl = `${environment.apiUrl}/users/me/profile`;
 
   constructor(private http: HttpClient){}
   getMyProfile(): Observable<Profile>{

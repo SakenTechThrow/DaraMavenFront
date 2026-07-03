@@ -9,11 +9,12 @@ import{
   PageResponse
 } from '../../models/admin-user';
 import { Profile } from '../../models/profile';
+import { environment } from '../../../environments/environment.prod';
 @Injectable({
   providedIn: 'root',
 })
 export class AdminUserService {
-  private apiUrl = 'http://localhost:8080/api/admin/users';
+  private apiUrl = `${environment.apiUrl}/admin/users`;
 
   constructor(private http: HttpClient){}
 
