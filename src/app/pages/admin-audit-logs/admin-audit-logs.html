@@ -1,33 +1,35 @@
 <div class="audit-page">
-  <div class="audit-card">
+  <mat-card class="audit-card">
     <h1>Audit Logs</h1>
 
     <div class="filters">
-      <div class="form-group">
-        <label>Action</label>
+      <mat-form-field appearance="outline">
+        <mat-label>Action</mat-label>
         <input
+          matInput
           type="text"
           name="action"
           [(ngModel)]="action"
           placeholder="Example: USER_BLOCKED"
         />
-      </div>
+      </mat-form-field>
 
-      <div class="form-group">
-        <label>Actor email</label>
+      <mat-form-field appearance="outline">
+        <mat-label>Actor email</mat-label>
         <input
+          matInput
           type="text"
           name="actorEmail"
           [(ngModel)]="actorEmail"
           placeholder="admin@mail.com"
         />
-      </div>
+      </mat-form-field>
 
-      <button class="filter-btn" (click)="applyFilters()">
+      <button mat-raised-button color="primary" (click)="applyFilters()">
         Apply Filters
       </button>
 
-      <button class="clear-btn" (click)="clearFilters()">
+      <button mat-stroked-button (click)="clearFilters()">
         Clear Filters
       </button>
     </div>
@@ -46,54 +48,98 @@
       </p>
 
       <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Actor</th>
-              <th>Action</th>
-              <th>Target Type</th>
-              <th>Target ID</th>
-              <th>IP</th>
-              <th>Description</th>
-              <th>Created</th>
-            </tr>
-          </thead>
+        <table mat-table [dataSource]="logs" class="mat-elevation-z2 audit-table">
 
-          <tbody>
-            @for (log of logs; track log.id) {
-              <tr>
-                <td>{{ log.id }}</td>
-                <td>{{ log.actorEmail || 'System' }}</td>
-                <td>
-                  <span class="badge">{{ log.action }}</span>
-                </td>
-                <td>{{ log.targetType }}</td>
-                <td>{{ log.targetId || '-' }}</td>
-                <td>{{ log.ipAddress || '-' }}</td>
-                <td>{{ log.description || '-' }}</td>
-                <td>{{ log.createdAt | date:'dd MMM yyyy, HH:mm' }}</td>
-              </tr>
-            }
-          </tbody>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let log">
+              {{ log.id }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actorEmail">
+            <th mat-header-cell *matHeaderCellDef>Actor</th>
+            <td mat-cell *matCellDef="let log">
+              {{ log.actorEmail || 'System' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let log">
+              <mat-chip>{{ log.action }}</mat-chip>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="targetType">
+            <th mat-header-cell *matHeaderCellDef>Target Type</th>
+            <td mat-cell *matCellDef="let log">
+              {{ log.targetType || '-' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="targetId">
+            <th mat-header-cell *matHeaderCellDef>Target ID</th>
+            <td mat-cell *matCellDef="let log">
+              {{ log.targetId || '-' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="ipAddress">
+            <th mat-header-cell *matHeaderCellDef>IP</th>
+            <td mat-cell *matCellDef="let log">
+              {{ log.ipAddress || '-' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let log">
+              {{ log.description || '-' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef>Created</th>
+            <td mat-cell *matCellDef="let log">
+              {{ log.createdAt | date:'dd MMM yyyy, HH:mm' }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
 
       <div class="pagination">
-        <button (click)="previousPage()" [disabled]="page === 0">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="previousPage()"
+          [disabled]="page === 0"
+        >
           Previous
         </button>
 
         <span>Page {{ page + 1 }} of {{ totalPages }}</span>
 
-        <button (click)="nextPage()" [disabled]="page + 1 >= totalPages">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="nextPage()"
+          [disabled]="page + 1 >= totalPages"
+        >
           Next
         </button>
       </div>
 
-      <button class="back-btn" (click)="goBack()">
+      <button
+        mat-raised-button
+        class="back-btn"
+        (click)="goBack()"
+      >
         Back to Dashboard
       </button>
     }
-  </div>
+  </mat-card>
 </div>

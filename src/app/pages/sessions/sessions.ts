@@ -4,10 +4,20 @@ import { Session } from '../../models/session';
 import { SessionService } from '../../core/services/session';
 import { DatePipe } from '@angular/common';
 import { getErrorMessage } from '../../core/utils/error-message';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-sessions',
-  imports: [DatePipe],
+  imports: [
+    DatePipe,
+    MatTableModule,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule
+  ],
   templateUrl: './sessions.html',
   styleUrl: './sessions.scss',
 })
@@ -24,6 +34,16 @@ export class Sessions implements OnInit{
     private sessionService: SessionService,
     private router: Router
   ){}
+
+  displayedColumns: string[] = [
+    'id',
+    'ipAddress',
+    'userAgent',
+    'createdAt',
+    'expiresAt',
+    'revoked',
+    'actions'
+  ];
 
   ngOnInit(): void {
     this.loadSessions();

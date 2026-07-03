@@ -6,12 +6,10 @@
 }
 
 .admin-card {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
-  background: white;
   padding: 32px;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 h1 {
@@ -28,30 +26,14 @@ h1 {
   margin-top: 20px;
 }
 
-table {
+.users-table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
 }
 
-th,
-td {
-  padding: 12px;
-  border-bottom: 1px solid #e5e7eb;
-  text-align: left;
-  vertical-align: top;
-}
-
-th {
-  background: #f9fafb;
-}
-
-.badge {
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: #eef2ff;
-  color: #3730a3;
-  font-weight: 600;
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .good {
@@ -64,49 +46,6 @@ th {
   font-weight: 600;
 }
 
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-button {
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.small-btn {
-  padding: 8px 10px;
-  font-size: 12px;
-}
-
-.blue {
-  background: #2563eb;
-}
-
-.gray {
-  background: #6b7280;
-}
-
-.orange {
-  background: #ea580c;
-}
-
-.green {
-  background: #16a34a;
-}
-
-.red {
-  background: #dc2626;
-}
-
 .pagination {
   display: flex;
   justify-content: center;
@@ -115,16 +54,11 @@ button:disabled {
   margin-top: 24px;
 }
 
-.pagination button {
-  padding: 10px 16px;
-  background: #2563eb;
-}
-
 .back-btn {
   width: 100%;
-  padding: 12px;
   margin-top: 24px;
   background: #6b7280;
+  color: white;
 }
 
 .error {
@@ -133,8 +67,4 @@ button:disabled {
 
 .success {
   color: #16a34a;
-}
-
-.purple {
-  background: #7c3aed;
 }

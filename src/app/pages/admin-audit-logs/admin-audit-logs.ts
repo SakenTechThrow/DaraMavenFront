@@ -5,10 +5,25 @@ import { AuditLog } from '../../models/audit-log';
 import { AuditLogService } from '../../core/services/audit-log';
 import { DatePipe } from '@angular/common';
 import { getErrorMessage } from '../../core/utils/error-message';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-admin-audit-logs',
-  imports: [FormsModule, DatePipe],
+  imports: [
+    FormsModule,
+     DatePipe,
+    MatTableModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatChipsModule
+    ],
   templateUrl: './admin-audit-logs.html',
   styleUrl: './admin-audit-logs.scss',
 })
@@ -30,6 +45,17 @@ export class AdminAuditLogs implements OnInit{
     private auditLogService: AuditLogService,
     private router: Router
   ){}
+
+  displayedColumns: string[] = [
+    'id',
+    'actorEmail',
+    'action',
+    'targetType',
+    'targetId',
+    'ipAddress',
+    'desctiption',
+    'createdAt'
+  ];
 
   ngOnInit(): void {
     this.loadLogs();

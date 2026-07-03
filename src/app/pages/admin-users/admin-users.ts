@@ -4,10 +4,20 @@ import { AdminUser } from '../../models/admin-user';
 import { AdminUserService } from '../../core/services/admin-user';
 import { DatePipe } from '@angular/common';
 import { getErrorMessage } from '../../core/utils/error-message';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-admin-users',
-  imports: [DatePipe],
+  imports: [
+    DatePipe,
+    MatTableModule,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule
+  ],
   templateUrl: './admin-users.html',
   styleUrl: './admin-users.scss',
 })
@@ -33,6 +43,16 @@ export class AdminUsers implements OnInit{
   ngOnInit(): void {
     this.loadUsers();
   }
+
+  displayedColumns: string[] = [
+    'id',
+    'email',
+    'role',
+    'active',
+    'deleted',
+    'createdAt',
+    'actions'
+  ];
 
   loadUsers(): void{
     this.loading = true;
