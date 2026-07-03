@@ -5,10 +5,23 @@ import { Router } from '@angular/router';
 import { ProfileService } from '../../core/services/profile';
 import { Profile as UserProfile } from '../../models/profile';
 import { getErrorMessage } from '../../core/utils/error-message';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, DatePipe],
+  imports: [
+    FormsModule, 
+    DatePipe,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    TranslatePipe
+  ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })

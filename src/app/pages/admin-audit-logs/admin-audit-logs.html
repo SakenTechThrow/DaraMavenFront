@@ -1,10 +1,14 @@
-<div class="audit-page">
-  <mat-card class="audit-card">
-    <h1>Audit Logs</h1>
+<div class="audit-page page-bg">
+  <mat-card class="audit-card app-card">
+    <h1 class="page-title">{{ 'auditLogs.title' | t }}</h1>
 
-    <div class="filters">
+    <p class="page-subtitle">
+      {{ 'auditLogs.subtitle' | t }}
+    </p>
+
+    <div class="filters info-box">
       <mat-form-field appearance="outline">
-        <mat-label>Action</mat-label>
+        <mat-label>{{ 'auditLogs.action' | t }}</mat-label>
         <input
           matInput
           type="text"
@@ -15,7 +19,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Actor email</mat-label>
+        <mat-label>{{ 'auditLogs.actorEmail' | t }}</mat-label>
         <input
           matInput
           type="text"
@@ -25,17 +29,25 @@
         />
       </mat-form-field>
 
-      <button mat-raised-button color="primary" (click)="applyFilters()">
-        Apply Filters
+      <button
+        mat-raised-button
+        class="primary-gradient-btn filter-btn"
+        (click)="applyFilters()"
+      >
+        {{ 'auditLogs.applyFilters' | t }}
       </button>
 
-      <button mat-stroked-button (click)="clearFilters()">
-        Clear Filters
+      <button
+        mat-stroked-button
+        class="clear-btn"
+        (click)="clearFilters()"
+      >
+        {{ 'auditLogs.clearFilters' | t }}
       </button>
     </div>
 
     @if (loading) {
-      <p>Loading audit logs...</p>
+      <p class="loading-text">{{ 'common.loading' | t }}</p>
     }
 
     @if (errorMessage) {
@@ -43,12 +55,20 @@
     }
 
     @if (!loading) {
-      <p class="summary">
-        Total logs: {{ totalElements }}
-      </p>
+      <div class="audit-summary">
+        <div class="summary-card info-box">
+          <span class="summary-label">{{ 'auditLogs.totalLogs' | t }}</span>
+          <strong>{{ totalElements }}</strong>
+        </div>
+
+        <div class="summary-card info-box">
+          <span class="summary-label">{{ 'auditLogs.currentPage' | t }}</span>
+          <strong>{{ page + 1 }} / {{ totalPages }}</strong>
+        </div>
+      </div>
 
       <div class="table-wrapper">
-        <table mat-table [dataSource]="logs" class="mat-elevation-z2 audit-table">
+        <table mat-table [dataSource]="logs" class="audit-table">
 
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -58,49 +78,51 @@
           </ng-container>
 
           <ng-container matColumnDef="actorEmail">
-            <th mat-header-cell *matHeaderCellDef>Actor</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'auditLogs.actorEmail' | t }}</th>
             <td mat-cell *matCellDef="let log">
-              {{ log.actorEmail || 'System' }}
+              <strong>{{ log.actorEmail || 'System' }}</strong>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'auditLogs.action' | t }}</th>
             <td mat-cell *matCellDef="let log">
-              <mat-chip>{{ log.action }}</mat-chip>
+              <mat-chip class="action-chip">
+                {{ log.action }}
+              </mat-chip>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="targetType">
-            <th mat-header-cell *matHeaderCellDef>Target Type</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'auditLogs.targetType' | t }}</th>
             <td mat-cell *matCellDef="let log">
               {{ log.targetType || '-' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="targetId">
-            <th mat-header-cell *matHeaderCellDef>Target ID</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'auditLogs.targetId' | t }}</th>
             <td mat-cell *matCellDef="let log">
               {{ log.targetId || '-' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="ipAddress">
-            <th mat-header-cell *matHeaderCellDef>IP</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'auditLogs.ipAddress' | t }}</th>
             <td mat-cell *matCellDef="let log">
               {{ log.ipAddress || '-' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef>Description</th>
-            <td mat-cell *matCellDef="let log">
+            <th mat-header-cell *matHeaderCellDef>{{ 'auditLogs.description' | t }}</th>
+            <td mat-cell *matCellDef="let log" class="description-cell">
               {{ log.description || '-' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="createdAt">
-            <th mat-header-cell *matHeaderCellDef>Created</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'common.createdAt' | t }}</th>
             <td mat-cell *matCellDef="let log">
               {{ log.createdAt | date:'dd MMM yyyy, HH:mm' }}
             </td>
@@ -114,31 +136,31 @@
       <div class="pagination">
         <button
           mat-raised-button
-          color="primary"
+          class="primary-gradient-btn"
           (click)="previousPage()"
           [disabled]="page === 0"
         >
-          Previous
+          {{ 'common.previous' | t }}
         </button>
 
-        <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+        <span>{{ 'common.page' | t }} {{ page + 1 }} / {{ totalPages }}</span>
 
         <button
           mat-raised-button
-          color="primary"
+          class="primary-gradient-btn"
           (click)="nextPage()"
           [disabled]="page + 1 >= totalPages"
         >
-          Next
+          {{ 'common.next' | t }}
         </button>
       </div>
 
       <button
-        mat-raised-button
+        mat-stroked-button
         class="back-btn"
         (click)="goBack()"
       >
-        Back to Dashboard
+        {{ 'common.backToDashboard' | t }}
       </button>
     }
   </mat-card>

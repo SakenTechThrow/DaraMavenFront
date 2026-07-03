@@ -1,9 +1,14 @@
-<div class="sessions-page">
-  <mat-card class="sessions-card">
-    <h1>My Sessions</h1>
+<div class="sessions-page page-bg">
+  <mat-card class="sessions-card app-card">
+
+    <h1 class="page-title">{{ 'sessions.title' | t }}</h1>
+
+    <p class="page-subtitle">
+      {{ 'sessions.subtitle' | t }}
+    </p>
 
     @if (loading) {
-      <p>Loading sessions...</p>
+      <p class="loading-text">{{ 'common.loading' | t }}</p>
     }
 
     @if (errorMessage) {
@@ -16,10 +21,25 @@
 
     @if (!loading) {
       @if (sessions.length === 0) {
-        <p>No sessions found.</p>
+        <div class="empty-box info-box">
+          <h3>{{ 'sessions.noSessionsTitle' | t }}</h3>
+          <p>{{ 'sessions.noSessionsText' | t }}</p>
+        </div>
       } @else {
+        <div class="sessions-summary info-box">
+          <div>
+            <span class="summary-label">{{ 'sessions.totalSessions' | t }}</span>
+            <strong>{{ sessions.length }}</strong>
+          </div>
+
+          <div>
+            <span class="summary-label">{{ 'sessions.activeSessions' | t }}</span>
+            <strong>{{ sessions.length }}</strong>
+          </div>
+        </div>
+
         <div class="table-wrapper">
-          <table mat-table [dataSource]="sessions" class="mat-elevation-z2 sessions-table">
+          <table mat-table [dataSource]="sessions" class="sessions-table">
 
             <ng-container matColumnDef="id">
               <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -29,54 +49,54 @@
             </ng-container>
 
             <ng-container matColumnDef="ipAddress">
-              <th mat-header-cell *matHeaderCellDef>IP Address</th>
+              <th mat-header-cell *matHeaderCellDef>{{ 'sessions.ipAddress' | t }}</th>
               <td mat-cell *matCellDef="let session">
                 {{ session.ipAddress || 'Unknown' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="userAgent">
-              <th mat-header-cell *matHeaderCellDef>User Agent</th>
-              <td mat-cell *matCellDef="let session">
+              <th mat-header-cell *matHeaderCellDef>{{ 'sessions.userAgent' | t }}</th>
+              <td mat-cell *matCellDef="let session" class="user-agent-cell">
                 {{ session.userAgent || 'Unknown' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="createdAt">
-              <th mat-header-cell *matHeaderCellDef>Created</th>
+              <th mat-header-cell *matHeaderCellDef>{{ 'common.createdAt' | t }}</th>
               <td mat-cell *matCellDef="let session">
                 {{ session.createdAt | date:'dd MMM yyyy, HH:mm' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="expiresAt">
-              <th mat-header-cell *matHeaderCellDef>Expires</th>
+              <th mat-header-cell *matHeaderCellDef>{{ 'sessions.expiresAt' | t }}</th>
               <td mat-cell *matCellDef="let session">
                 {{ session.expiresAt | date:'dd MMM yyyy, HH:mm' }}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="revoked">
-              <th mat-header-cell *matHeaderCellDef>Revoked</th>
+              <th mat-header-cell *matHeaderCellDef>{{ 'sessions.revoked' | t }}</th>
               <td mat-cell *matCellDef="let session">
                 @if (session.revoked) {
-                  <mat-chip class="bad-chip">Yes</mat-chip>
+                  <mat-chip class="danger-chip">{{ 'common.yes' | t }}</mat-chip>
                 } @else {
-                  <mat-chip class="good-chip">No</mat-chip>
+                  <mat-chip class="success-chip">{{ 'common.no' | t }}</mat-chip>
                 }
               </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <th mat-header-cell *matHeaderCellDef>{{ 'common.actions' | t }}</th>
               <td mat-cell *matCellDef="let session">
                 <button
                   mat-raised-button
-                  color="warn"
+                  class="danger-gradient-btn delete-btn"
                   (click)="deleteSession(session.id)"
                   [disabled]="deletingId === session.id"
                 >
-                  {{ deletingId === session.id ? 'Deleting...' : 'Delete' }}
+                  {{ deletingId === session.id ? ('common.loading' | t) : ('common.delete' | t) }}
                 </button>
               </td>
             </ng-container>
@@ -88,11 +108,11 @@
       }
 
       <button
-        mat-raised-button
+        mat-stroked-button
         class="back-btn"
         (click)="goBack()"
       >
-        Back to Dashboard
+        {{ 'common.backToDashboard' | t }}
       </button>
     }
   </mat-card>

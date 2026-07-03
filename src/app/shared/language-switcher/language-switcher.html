@@ -1,0 +1,17 @@
+<div class="language-switcher">
+  <button
+    mat-stroked-button
+    [class.active]="i18n.currentLanguage() === 'ru'"
+    (click)="setLanguage('ru')"
+  >
+    RU
+  </button>
+
+  <button
+    mat-stroked-button
+    [class.active]="i18n.currentLanguage() === 'kk'"
+    (click)="setLanguage('kk')"
+  >
+    KZ
+  </button>
+</div>

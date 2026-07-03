@@ -1,9 +1,13 @@
-<div class="admin-page">
-  <mat-card class="admin-card">
-    <h1>Admin Users</h1>
+<div class="admin-page page-bg">
+  <mat-card class="admin-card app-card">
+    <h1 class="page-title">{{ 'adminUsers.title' | t }}</h1>
+
+    <p class="page-subtitle">
+      {{ 'adminUsers.subtitle' | t }}
+    </p>
 
     @if (loading) {
-      <p>Loading users...</p>
+      <p class="loading-text">{{ 'common.loading' | t }}</p>
     }
 
     @if (errorMessage) {
@@ -15,12 +19,20 @@
     }
 
     @if (!loading) {
-      <p class="summary">
-        Total users: {{ totalElements }}
-      </p>
+      <div class="admin-summary">
+        <div class="summary-card info-box">
+          <span class="summary-label">{{ 'adminUsers.totalUsers' | t }}</span>
+          <strong>{{ totalElements }}</strong>
+        </div>
+
+        <div class="summary-card info-box">
+          <span class="summary-label">{{ 'adminUsers.currentPage' | t }}</span>
+          <strong>{{ page + 1 }} / {{ totalPages }}</strong>
+        </div>
+      </div>
 
       <div class="table-wrapper">
-        <table mat-table [dataSource]="users" class="mat-elevation-z2 users-table">
+        <table mat-table [dataSource]="users" class="users-table">
 
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -30,114 +42,124 @@
           </ng-container>
 
           <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'common.email' | t }}</th>
             <td mat-cell *matCellDef="let user">
-              {{ user.email }}
+              <strong>{{ user.email }}</strong>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="role">
-            <th mat-header-cell *matHeaderCellDef>Role</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'dashboard.role' | t }}</th>
             <td mat-cell *matCellDef="let user">
-              <mat-chip>{{ user.role }}</mat-chip>
+              <mat-chip
+                [class.admin-chip]="user.role === 'ADMIN'"
+                [class.user-chip]="user.role === 'USER'"
+              >
+                {{ user.role }}
+              </mat-chip>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="active">
-            <th mat-header-cell *matHeaderCellDef>Active</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'dashboard.active' | t }}</th>
             <td mat-cell *matCellDef="let user">
-              <span [class.good]="user.active" [class.bad]="!user.active">
-                {{ user.active ? 'Yes' : 'No' }}
-              </span>
+              @if (user.active) {
+                <mat-chip class="success-chip">{{ 'common.yes' | t }}</mat-chip>
+              } @else {
+                <mat-chip class="danger-chip">{{ 'common.no' | t }}</mat-chip>
+              }
             </td>
           </ng-container>
 
           <ng-container matColumnDef="deleted">
-            <th mat-header-cell *matHeaderCellDef>Deleted</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'adminUsers.deleted' | t }}</th>
             <td mat-cell *matCellDef="let user">
-              <span [class.bad]="user.deleted" [class.good]="!user.deleted">
-                {{ user.deleted ? 'Yes' : 'No' }}
-              </span>
+              @if (user.deleted) {
+                <mat-chip class="danger-chip">{{ 'common.yes' | t }}</mat-chip>
+              } @else {
+                <mat-chip class="success-chip">{{ 'common.no' | t }}</mat-chip>
+              }
             </td>
           </ng-container>
 
           <ng-container matColumnDef="createdAt">
-            <th mat-header-cell *matHeaderCellDef>Created</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'common.createdAt' | t }}</th>
             <td mat-cell *matCellDef="let user">
               {{ user.createdAt | date:'dd MMM yyyy, HH:mm' }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'common.actions' | t }}</th>
             <td mat-cell *matCellDef="let user">
               <div class="actions">
                 <button
-                  mat-stroked-button
-                  color="primary"
+                  mat-raised-button
+                  class="primary-gradient-btn action-btn"
                   (click)="viewProfile(user)"
                 >
-                  View Profile
+                  {{ 'adminUsers.viewProfile' | t }}
                 </button>
 
                 @if (user.role !== 'ADMIN') {
                   <button
                     mat-stroked-button
-                    color="primary"
+                    class="action-btn"
                     (click)="makeAdmin(user)"
                     [disabled]="actionLoadingId === user.id"
                   >
-                    Make Admin
+                    {{ 'adminUsers.makeAdmin' | t }}
                   </button>
                 }
 
                 @if (user.role !== 'USER') {
                   <button
                     mat-stroked-button
+                    class="action-btn"
                     (click)="makeUser(user)"
                     [disabled]="actionLoadingId === user.id"
                   >
-                    Make User
+                    {{ 'adminUsers.makeUser' | t }}
                   </button>
                 }
 
                 @if (user.active) {
                   <button
                     mat-stroked-button
-                    color="warn"
+                    class="warn-outline action-btn"
                     (click)="blockUser(user)"
                     [disabled]="actionLoadingId === user.id"
                   >
-                    Block
+                     {{ 'adminUsers.block' | t }}
                   </button>
                 } @else {
                   <button
                     mat-stroked-button
-                    color="primary"
+                    class="action-btn"
                     (click)="unblockUser(user)"
                     [disabled]="actionLoadingId === user.id"
                   >
-                    Unblock
+                    {{ 'adminUsers.unblock' | t }}
                   </button>
                 }
 
                 @if (!user.deleted) {
                   <button
                     mat-raised-button
-                    color="warn"
+                    class="danger-gradient-btn action-btn"
                     (click)="deleteUser(user)"
                     [disabled]="actionLoadingId === user.id"
                   >
-                    Delete
+                    {{ 'common.delete' | t }}
                   </button>
                 } @else {
                   <button
                     mat-raised-button
-                    color="primary"
+                    class="primary-gradient-btn action-btn"
                     (click)="restoreUser(user)"
                     [disabled]="actionLoadingId === user.id"
                   >
-                    Restore
+                    {{ 'adminUsers.restore' | t }}
                   </button>
                 }
               </div>
@@ -152,31 +174,31 @@
       <div class="pagination">
         <button
           mat-raised-button
-          color="primary"
+          class="primary-gradient-btn"
           (click)="previousPage()"
           [disabled]="page === 0"
         >
-          Previous
+          {{ 'common.previous' | t }}
         </button>
 
-        <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+        <span>{{ 'common.page' | t }} {{ page + 1 }} / {{ totalPages }}</span>
 
         <button
           mat-raised-button
-          color="primary"
+          class="primary-gradient-btn"
           (click)="nextPage()"
           [disabled]="page + 1 >= totalPages"
         >
-          Next
+          {{ 'common.next' | t }}
         </button>
       </div>
 
       <button
-        mat-raised-button
+        mat-stroked-button
         class="back-btn"
         (click)="goBack()"
       >
-        Back to Dashboard
+        {{ 'common.backToDashboard' | t }}
       </button>
     }
   </mat-card>

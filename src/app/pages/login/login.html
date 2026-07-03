@@ -1,39 +1,50 @@
-<div class="auth-page">
-  <div class="auth-card">
-    <h1>DaraMaven</h1>
-    <p class="subtitle">Login to your account</p>
+<div class="auth-page page-bg">
+  <mat-card class="auth-card app-card">
+    <h1 class="page-title">{{ 'auth.loginTitle' | t }}</h1>
+    <p class="auth-subtitle">{{ 'auth.loginSubtitle' | t }}</p>
 
-    <form (ngSubmit)="onSubmit()">
-      <label>Email</label>
-      <input
-        type="email"
-        name="email"
-        [(ngModel)]="email"
-        placeholder="Enter email"
-        required
-      />
+    <form (ngSubmit)="onSubmit()" class="auth-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'common.email' | t }}</mat-label>
+        <input
+          matInput
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter email"
+          required
+        />
+      </mat-form-field>
 
-      <label>Password</label>
-      <input
-        type="password"
-        name="password"
-        [(ngModel)]="password"
-        placeholder="Enter password"
-        required
-      />
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'common.password' | t }}</mat-label>
+        <input
+          matInput
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter password"
+          required
+        />
+      </mat-form-field>
 
       @if (errorMessage) {
         <p class="error">{{ errorMessage }}</p>
       }
 
-      <button type="submit" [disabled]="loading">
-        {{ loading ? 'Loading...' : 'Login' }}
+      <button
+        mat-raised-button
+        class="full-width primary-gradient-btn auth-submit-btn"
+        type="submit"
+        [disabled]="loading"
+      >
+        {{ loading ? ('common.loading' | t) : ('auth.loginButton' | t) }}
       </button>
     </form>
 
     <p class="link-text">
-      Don't have an account?
+      {{ 'auth.dontHaveAccount' | t }}
       <a routerLink="/register">Register</a>
     </p>
-  </div>
+  </mat-card>
 </div>

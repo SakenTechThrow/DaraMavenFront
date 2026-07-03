@@ -1,24 +1,41 @@
-<div class="profile-page">
-  <div class="profile-card">
-    <h1>My Profile</h1>
+<div class="profile-page page-bg">
+  <mat-card class="profile-card app-card">
+    <h1 class="page-title">{{ 'profile.title' | t }}</h1>
 
     @if (loading) {
-      <p>Loading profile...</p>
+      <p class="loading-text">{{ 'common.loading' | t }}</p>
     }
 
     @if (!loading) {
       @if (profile) {
-        <p class="status existing">Profile exists. You can edit it.</p>
+        <div class="status-card existing">
+          <div>
+            <h3>{{ 'profile.existsTitle' | t }}</h3>
+            <p>{{ 'profile.existsText' | t }}</p>
+          </div>
+        </div>
       } @else {
-        <p class="status new">You do not have a profile yet. Create it now.</p>
+        <div class="status-card new">
+          <div>
+            <h3>{{ 'profile.notCreatedTitle' | t }}</h3>
+            <p>{{ 'profile.notCreatedText' | t }}</p>
+          </div>
+        </div>
       }
 
       @if (profile) {
-  <div class="profile-meta">
-    <p><strong>Created:</strong> {{ profile.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
-    <p><strong>Updated:</strong> {{ profile.updatedAt | date:'dd MMM yyyy, HH:mm' }}</p>
-  </div>
-}
+        <div class="profile-meta info-box">
+          <div>
+            <span class="meta-label">{{ 'common.createdAt' | t }}</span>
+            <strong>{{ profile.createdAt | date:'dd MMM yyyy, HH:mm' }}</strong>
+          </div>
+
+          <div>
+            <span class="meta-label">{{ 'common.updatedAt' | t }}</span>
+            <strong>{{ profile.updatedAt | date:'dd MMM yyyy, HH:mm' }}</strong>
+          </div>
+        </div>
+      }
 
       @if (errorMessage) {
         <p class="error">{{ errorMessage }}</p>
@@ -28,82 +45,106 @@
         <p class="success">{{ successMessage }}</p>
       }
 
-      <form (ngSubmit)="saveProfile()">
+      <form (ngSubmit)="saveProfile()" class="profile-form">
         <div class="form-row">
-          <div class="form-group">
-            <label>First name</label>
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>{{ 'profile.firstName' | t }}</mat-label>
             <input
+              matInput
               type="text"
               name="firstName"
               [(ngModel)]="firstName"
               placeholder="Enter first name"
             />
-          </div>
+          </mat-form-field>
 
-          <div class="form-group">
-            <label>Last name</label>
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>{{ 'profile.lastName' | t }}</mat-label>
             <input
+              matInput
               type="text"
               name="lastName"
               [(ngModel)]="lastName"
               placeholder="Enter last name"
             />
-          </div>
+          </mat-form-field>
         </div>
 
-        <div class="form-group">
-          <label>Phone</label>
-          <input
-            type="text"
-            name="phone"
-            [(ngModel)]="phone"
-            placeholder="+77071234567"
-          />
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>{{ 'profile.phone' | t }}</mat-label>
+            <input
+              matInput
+              type="text"
+              name="phone"
+              [(ngModel)]="phone"
+              placeholder="+77071234567"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>{{ 'profile.city' | t }}</mat-label>
+            <input
+              matInput
+              type="text"
+              name="city"
+              [(ngModel)]="city"
+              placeholder="Almaty"
+            />
+          </mat-form-field>
         </div>
 
-        <div class="form-group">
-          <label>City</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'profile.birthDate' | t }}</mat-label>
           <input
-            type="text"
-            name="city"
-            [(ngModel)]="city"
-            placeholder="Almaty"
-          />
-        </div>
-
-        <div class="form-group">
-          <label>Birth date</label>
-          <input
+            matInput
             type="date"
             name="birthDate"
             [(ngModel)]="birthDate"
           />
-        </div>
+        </mat-form-field>
 
-        <div class="form-group">
-          <label>Bio</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'profile.bio' | t }}</mat-label>
           <textarea
+            matInput
             name="bio"
             [(ngModel)]="bio"
             placeholder="Tell something about yourself"
             rows="4"
           ></textarea>
-        </div>
+        </mat-form-field>
 
-        <button type="submit" class="save-btn" [disabled]="saving">
-          {{ saving ? 'Saving...' : 'Save Profile' }}
+        <button
+          mat-raised-button
+          class="full-width primary-gradient-btn"
+          type="submit"
+          [disabled]="saving"
+        >
+          {{ saving ? ('common.loading' | t) : ('profile.saveProfile' | t) }}
         </button>
       </form>
 
-      @if (profile) {
-        <button class="delete-btn" (click)="deleteProfile()" [disabled]="deleting">
-          {{ deleting ? 'Deleting...' : 'Delete Profile' }}
-        </button>
-      }
+      <div class="profile-actions">
+        @if (profile) {
+          <button
+            mat-raised-button
+            class="full-width danger-gradient-btn"
+            (click)="deleteProfile()"
+            [disabled]="deleting"
+          >
+             {{ deleting ? ('common.loading' | t) : ('profile.deleteProfile' | t) }}
+          </button>
+        }
 
-      <button class="back-btn" (click)="goBack()">
-        Back to Dashboard
-      </button>
+        <button
+          mat-stroked-button
+          class="full-width back-btn"
+          (click)="goBack()"
+        >
+          {{ 'common.backToDashboard' | t }}
+        </button>
+      </div>
     }
-  </div>
+  </mat-card>
 </div>

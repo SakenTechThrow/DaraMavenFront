@@ -1,9 +1,10 @@
-<div class="profile-page">
-  <div class="profile-card">
-    <h1>User Profile</h1>
+<div class="profile-page page-bg">
+  <mat-card class="profile-card app-card">
+
+    <h1 class="page-title">{{ 'adminUserProfile.title' | t }}</h1>
 
     @if (loading) {
-      <p>Loading user profile...</p>
+      <p class="loading-text">{{ 'common.loading' | t }}</p>
     }
 
     @if (errorMessage) {
@@ -11,33 +12,78 @@
     }
 
     @if (!loading && profile) {
-      <div class="profile-info">
-        <p><strong>Profile ID:</strong> {{ profile.id }}</p>
-        <p><strong>User ID:</strong> {{ profile.userId }}</p>
-        <p><strong>Email:</strong> {{ profile.email }}</p>
-        <p><strong>First name:</strong> {{ profile.firstName || '-' }}</p>
-        <p><strong>Last name:</strong> {{ profile.lastName || '-' }}</p>
-        <p><strong>Phone:</strong> {{ profile.phone || '-' }}</p>
-        <p><strong>City:</strong> {{ profile.city || '-' }}</p>
-        <p><strong>Birth date:</strong> {{ profile.birthDate || '-' }}</p>
-        <p><strong>Bio:</strong> {{ profile.bio || '-' }}</p>
+      <div class="profile-info info-box">
+
         <p>
-          <strong>Created at:</strong>
+          <strong>{{ 'adminUserProfile.profileId' | t }}:</strong>
+          {{ profile.id }}
+        </p>
+
+        <p>
+          <strong>{{ 'adminUserProfile.userId' | t }}:</strong>
+          {{ profile.userId }}
+        </p>
+
+        <p>
+          <strong>{{ 'common.email' | t }}:</strong>
+          {{ profile.email }}
+        </p>
+
+        <p>
+          <strong>{{ 'profile.firstName' | t }}:</strong>
+          {{ profile.firstName || '-' }}
+        </p>
+
+        <p>
+          <strong>{{ 'profile.lastName' | t }}:</strong>
+          {{ profile.lastName || '-' }}
+        </p>
+
+        <p>
+          <strong>{{ 'profile.phone' | t }}:</strong>
+          {{ profile.phone || '-' }}
+        </p>
+
+        <p>
+          <strong>{{ 'profile.city' | t }}:</strong>
+          {{ profile.city || '-' }}
+        </p>
+
+        <p>
+          <strong>{{ 'profile.birthDate' | t }}:</strong>
+          {{ profile.birthDate || '-' }}
+        </p>
+
+        <p>
+          <strong>{{ 'profile.bio' | t }}:</strong>
+          {{ profile.bio || '-' }}
+        </p>
+
+        <p>
+          <strong>{{ 'common.createdAt' | t }}:</strong>
           {{ profile.createdAt | date:'dd MMM yyyy, HH:mm' }}
         </p>
+
         <p>
-          <strong>Updated at:</strong>
+          <strong>{{ 'common.updatedAt' | t }}:</strong>
           {{ profile.updatedAt | date:'dd MMM yyyy, HH:mm' }}
         </p>
       </div>
     }
 
     @if (!loading && !profile && !errorMessage) {
-      <p>No profile found for this user.</p>
+      <div class="empty-box info-box">
+        <h3>{{ 'adminUserProfile.noProfileTitle' | t }}</h3>
+        <p>{{ 'adminUserProfile.noProfileText' | t }}</p>
+      </div>
     }
 
-    <button class="back-btn" (click)="goBack()">
-      Back to Admin Users
+    <button
+      mat-stroked-button
+      class="back-btn"
+      (click)="goBack()"
+    >
+      {{ 'common.backToAdminUsers' | t }}
     </button>
-  </div>
+  </mat-card>
 </div>

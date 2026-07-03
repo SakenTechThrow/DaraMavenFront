@@ -1,9 +1,9 @@
-<div class="dashboard-page">
-  <div class="dashboard-card">
-    <h1>DaraMaven Dashboard</h1>
+<div class="dashboard-page page-bg">
+  <mat-card class="dashboard-card app-card">
+    <h1 class="page-title">{{ 'dashboard.title' | t }}</h1>
 
     @if (loading) {
-      <p>Loading user data...</p>
+      <p>{{ 'common.loading' | t }}</p>
     }
 
     @if (errorMessage) {
@@ -11,35 +11,63 @@
     }
 
     @if (user) {
-      <div class="user-info">
-        <p><strong>ID:</strong> {{ user.id }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Role:</strong> {{ user.role }}</p>
-        <p><strong>Active:</strong> {{ user.active }}</p>
-        <p><strong>Created at:</strong> {{ user.createdAt | date:'dd MMM yyyy, HH:mm' }}</p>
+      <div class="user-info info-box">
+        <p>
+          <strong>{{ 'dashboard.id' | t }}:</strong>
+          {{ user.id }}
+        </p>
+        <p>
+          <strong>{{ 'common.email' | t }}:</strong>
+          {{ user.email }}
+        </p>
+        <p>
+          <strong>{{ 'dashboard.role' | t }}:</strong>
+          <mat-chip
+            [class.admin-chip]="user.role === 'ADMIN'"
+            [class.user-chip]="user.role === 'USER'"
+          >
+            {{ user.role }}
+          </mat-chip>
+        </p>
+
+        <p>
+          <strong>{{ 'dashboard.active' | t }}:</strong>
+          @if (user.active) {
+            <mat-chip class="success-chip">{{ 'common.yes' | t }}</mat-chip>
+          } @else {
+            <mat-chip class="danger-chip">{{ 'common.no' | t }}</mat-chip>
+          }
+        </p>
+
+        <p>
+          <strong>{{ 'common.createdAt' | t }}:</strong>
+          {{ user.createdAt | date:'dd MMM yyyy, HH:mm' }}
+        </p>
       </div>
 
-      <button class="profile-btn" routerLink="/profile">
-        My Profile
-      </button>
+      <div class="button-group">
+        <button mat-raised-button class="primary-gradient-btn" routerLink="/profile">
+  {{ 'dashboard.myProfile' | t }}
+</button>
 
-      <button class="sessions-btn" routerLink="/sessions">
-        My Sessions
-      </button>
-
-      @if (user.role === 'ADMIN') {
-        <button class="admin-btn" routerLink="/admin/users">
-          Admin Users
+        <button mat-raised-button class="primary-gradient-btn" routerLink="/sessions">
+          {{ 'dashboard.mySessions' | t }}
         </button>
 
-        <button class="audit-btn" routerLink="/admin/audit-logs">
-          Audit Logs
-        </button>
-      }
+        @if (user.role === 'ADMIN') {
+          <button mat-raised-button class="primary-gradient-btn" routerLink="/admin/users">
+            {{ 'dashboard.adminUsers' | t }}
+          </button>
 
-      <button class="logout-btn" (click)="logout()">
-        Logout
-      </button>
+          <button mat-raised-button class="primary-gradient-btn" routerLink="/admin/audit-logs">
+            {{ 'dashboard.auditLogs' | t }}
+          </button>
+        }
+
+        <button mat-raised-button class="danger-gradient-btn" (click)="logout()">
+          {{ 'common.logout' | t }}
+        </button>
+      </div>
     }
-  </div>
+  </mat-card>
 </div>

@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 
 @Component({
   selector: 'app-admin-audit-logs',
@@ -22,7 +23,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatChipsModule
+    MatChipsModule,
+    TranslatePipe
     ],
   templateUrl: './admin-audit-logs.html',
   styleUrl: './admin-audit-logs.scss',
@@ -53,7 +55,7 @@ export class AdminAuditLogs implements OnInit{
     'targetType',
     'targetId',
     'ipAddress',
-    'desctiption',
+    'description',
     'createdAt'
   ];
 

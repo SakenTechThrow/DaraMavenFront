@@ -4,10 +4,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Profile } from '../../models/profile';
 import { AdminUserService } from '../../core/services/admin-user';
 import { getErrorMessage } from '../../core/utils/error-message';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-admin-user-profile',
-  imports: [DatePipe],
+  imports: [
+    DatePipe, 
+    TranslatePipe,
+    MatCardModule,
+    MatButtonModule
+  ],
   templateUrl: './admin-user-profile.html',
   styleUrl: './admin-user-profile.scss',
 })

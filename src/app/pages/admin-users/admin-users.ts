@@ -8,6 +8,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-users',
@@ -16,7 +18,9 @@ import { MatChipsModule } from '@angular/material/chips';
     MatTableModule,
     MatButtonModule,
     MatCardModule,
-    MatChipsModule
+    MatChipsModule,
+    TranslatePipe,
+    MatSnackBarModule
   ],
   templateUrl: './admin-users.html',
   styleUrl: './admin-users.scss',
@@ -37,8 +41,28 @@ export class AdminUsers implements OnInit{
 
   constructor(
     private adminUserService: AdminUserService,
-    private router: Router
+    private router: Router,
+
+    private snackBar: MatSnackBar
   ){}
+
+  showSuccess(message: string): void {
+    this.snackBar.open(message, 'OK', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['snackbar-success']
+    });
+  }
+
+  showError(message: string): void {
+    this.snackBar.open(message, 'OK', {
+      duration: 4000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['snackbar-error']
+    });
+  }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -69,6 +93,7 @@ export class AdminUsers implements OnInit{
       error:(error) =>{
         this.loading = false;
         this.errorMessage = getErrorMessage(error, 'Could not load users. Maybe you are not ADMIN.');
+        this.showError(this.errorMessage);
       }
     });
   }
@@ -78,12 +103,12 @@ export class AdminUsers implements OnInit{
     this.adminUserService.changeRole(user.id, {role: 'ADMIN'}).subscribe({
       next:() =>{
         this.actionLoadingId = null;
-        this.successMessage = 'User role changed to ADMIN';
+        this.showSuccess('User role changed to ADMIN');
         this.loadUsers();
       },
       error: (error) =>{
         this.actionLoadingId = null;
-        this.errorMessage = getErrorMessage(error, 'Could not change role');
+        this.showError(getErrorMessage(error, 'Could not change role'));
       }
     });
   }
@@ -93,12 +118,12 @@ export class AdminUsers implements OnInit{
     this.adminUserService.changeRole(user.id, {role: 'USER'}).subscribe({
       next: () => {
         this.actionLoadingId = null;
-        this.successMessage = 'User role changed to USER';
+        this.showSuccess('User role changed to USER');
         this.loadUsers();
       },
       error: (error) => {
         this.actionLoadingId = null;
-        this.errorMessage = getErrorMessage(error, 'Could not change role');
+        this.showError(getErrorMessage(error, 'Could not change role'));
       }
     });
   }
@@ -113,12 +138,12 @@ export class AdminUsers implements OnInit{
     this.adminUserService.blockUser(user.id, {reason}).subscribe({
       next: () => {
         this.actionLoadingId = null;
-        this.successMessage = 'User blocked successfully';
+        this.showSuccess('User blocked successfully');
         this.loadUsers();
       },
       error: (error) =>{
         this.actionLoadingId = null;
-        this.errorMessage = getErrorMessage(error, 'Could not block user');
+        this.showError(getErrorMessage(error, 'Could not block user'));
       }
     });
   }
@@ -128,12 +153,12 @@ export class AdminUsers implements OnInit{
     this.adminUserService.unblockUser(user.id).subscribe({
       next:() => {
         this.actionLoadingId = null;
-        this.successMessage = 'User unblocked successfully';
+        this.showSuccess ('User unblocked successfully');
         this.loadUsers();
       },
       error: (error) => {
         this.actionLoadingId = null;
-        this.errorMessage = getErrorMessage(error, 'Could not unblock user');
+        this.showError(getErrorMessage(error, 'Could not unblock user'));
       }
     });
   }
@@ -148,12 +173,12 @@ export class AdminUsers implements OnInit{
     this.adminUserService.deleteUser(user.id).subscribe({
       next: ()=>{
         this.actionLoadingId = null;
-      this.successMessage = 'User deleted successfully';
+      this.showSuccess('User deleted successfully');
       this.loadUsers();
       },
       error:(error) =>{
         this.actionLoadingId = null;
-        this.errorMessage = getErrorMessage(error, 'Could not delete user');
+        this.showError(getErrorMessage(error, 'Could not delete user'));
       }
     });
   }
@@ -163,12 +188,12 @@ export class AdminUsers implements OnInit{
     this.adminUserService.restoreUser(user.id).subscribe({
       next: () =>{
         this.actionLoadingId = null;
-        this.successMessage = 'User restored successfully';
+        this.showSuccess('User restored successfully');
         this.loadUsers();
       },
       error: (error) => {
         this.actionLoadingId = null;
-        this.errorMessage = getErrorMessage(error, 'Could not restore user');
+        this.showError(getErrorMessage(error, 'Could not restore user'));
       }
     });
   }

@@ -1,35 +1,44 @@
-<div class="auth-page">
-  <div class="auth-card">
-    <h1>Create Account</h1>
-    <p class="subtitle">Register for DaraMaven</p>
+<div class="auth-page page-bg">
+  <mat-card class="auth-card app-card">
+    <h1 class="page-title">{{ 'auth.registerTitle' | t }}</h1>
+    <p class="auth-subtitle">{{ 'auth.registerSubtitle' | t }}</p>
 
-    <form (ngSubmit)="onSubmit()">
-      <label>Email</label>
-      <input
-        type="email"
-        name="email"
-        [(ngModel)]="email"
-        placeholder="Enter email"
-        required
-      />
+    <form (ngSubmit)="onSubmit()" class="auth-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'common.email' | t }}</mat-label>
+        <input
+          matInput
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter email"
+          required
+        />
+      </mat-form-field>
 
-      <label>Password</label>
-      <input
-        type="password"
-        name="password"
-        [(ngModel)]="password"
-        placeholder="Enter password"
-        required
-      />
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'common.password' | t }}</mat-label>
+        <input
+          matInput
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter password"
+          required
+        />
+      </mat-form-field>
 
-      <label>Confirm Password</label>
-      <input
-        type="password"
-        name="confirmPassword"
-        [(ngModel)]="confirmPassword"
-        placeholder="Confirm password"
-        required
-      />
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'auth.confirmPassword' | t }}</mat-label>
+        <input
+          matInput
+          type="password"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          placeholder="Confirm password"
+          required
+        />
+      </mat-form-field>
 
       @if (errorMessage) {
         <p class="error">{{ errorMessage }}</p>
@@ -39,14 +48,19 @@
         <p class="success">{{ successMessage }}</p>
       }
 
-      <button type="submit" [disabled]="loading">
-        {{ loading ? 'Creating...' : 'Register' }}
+      <button
+        mat-raised-button
+        class="full-width primary-gradient-btn auth-submit-btn"
+        type="submit"
+        [disabled]="loading"
+      >
+        {{ loading ? ('common.loading' | t) : ('auth.registerButton' | t) }}
       </button>
     </form>
 
     <p class="link-text">
-      Already have an account?
-      <a routerLink="/login">Login</a>
+      {{ 'auth.alreadyHaveAccount' | t }}
+      <a routerLink="/login">{{ 'auth.loginLink' | t }}</a>
     </p>
-  </div>
+  </mat-card>
 </div>

@@ -5,11 +5,22 @@ import { Auth } from '../../core/services/auth';
 import { Router, RouterLink} from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { getErrorMessage } from '../../core/utils/error-message';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterLink, DatePipe],
+  imports: [
+    RouterLink,
+    DatePipe,
+    MatCardModule,
+    MatButtonModule,
+    MatChipsModule,
+    TranslatePipe
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
